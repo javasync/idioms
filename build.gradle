@@ -22,7 +22,8 @@ repositories {
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
-    compile 'com.github.javasync:AsyncFileRw:1.1.2'
+    implementation 'com.github.javasync:AsyncFileRw:1.1.2'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.3'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
