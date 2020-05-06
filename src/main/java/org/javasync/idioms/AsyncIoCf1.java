@@ -12,19 +12,16 @@ import java.util.concurrent.CompletableFuture;
  * Based on chapter
  * 15.4 CompletableFuture and combinators for concurrency
  *
- * Example 1 with a single CompletableFuture and other running in the main thread.
- *
  *  !!!! For now ignoring error handling !!!!
  */
 public class AsyncIoCf1 {
     public static long countLines(String path1, String path2) throws IOException {
-
-        CompletableFuture<Integer> count1 = new CompletableFuture<>();
-        AsyncFiles.readAll(path1, (err, body) -> {
-            count1.complete(body.split("\n").length);
-        });
-        Path p2 = Paths.get(path2);
-        long count2 = Files.lines(p2).count();
-        return count1.join() + count2;
+        CompletableFuture<Integer> cf1 = AsyncFiles
+            .readAll(path1)
+            .thenApply(body -> body.split("\n").length);
+        CompletableFuture<Integer> cf2 = AsyncFiles
+            .readAll(path2)
+            .thenApply(body -> body.split("\n").length);
+        return cf1.join() + cf2.join();
     }
 }

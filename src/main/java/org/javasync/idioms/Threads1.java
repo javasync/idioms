@@ -21,14 +21,14 @@ public class Threads1 {
         Thread t2 = new Thread(() -> { result.right = nrOfLines(path2); });
         t1.start();
         t2.start();
-        t1.join();
-        t2.join();
+        t1.join(); // Wait for the result
+        t2.join(); // Wait for the result
         return result.left + result.right;
     }
     private static long nrOfLines(String path) {
         try {
             Path p = Paths.get(path);
-            return Files.lines(p).count();
+            return Files.lines(p).count(); // Blocking
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

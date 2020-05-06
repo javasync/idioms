@@ -21,10 +21,9 @@ public class AsyncIoCfsTest {
     }
 
     @Test public void testCf2ForTwoFiles() throws IOException {
-        long count = AsyncIoCf2.countLines(
-                        METAMORPHOSIS,
-                        DISCOURSE_ON_THE_METHOD);
-        assertEquals(4745, count);
+        AsyncIoCf2
+            .countLines(METAMORPHOSIS,DISCOURSE_ON_THE_METHOD)
+            .thenAccept(count -> assertEquals(4745, count.intValue()));
     }
 
     @Test public void testCf3ForThreeFiles() throws IOException {

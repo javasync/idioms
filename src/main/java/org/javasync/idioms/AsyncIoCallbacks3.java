@@ -23,6 +23,7 @@ public class AsyncIoCallbacks3 {
 
         for(String path : paths) {
             AsyncFiles.readAll(path, (err, body) -> {
+                if(err != null) { callback.accept(err, null); return; }
                 int n = body.split("\n").length;
                 int res = total.addAndGet(n);
                 if(count.incrementAndGet() >= paths.length)

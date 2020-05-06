@@ -18,11 +18,16 @@ import java.util.concurrent.Future;
  */
 public class Tasks1 {
     public static long countLines(String path1, String path2) throws ExecutionException, InterruptedException {
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
-        Future<Long> y = executorService.submit(() -> nrOfLines(path1));
-        Future<Long> z = executorService.submit(() -> nrOfLines(path2));
-        executorService.shutdown();
-        return y.get() + z.get();
+        ExecutorService executorService = null;
+        try{
+            executorService = Executors.newFixedThreadPool(2);
+            Future<Long> y = executorService.submit(() -> nrOfLines(path1)); // Callable <=> Supplier
+            Future<Long> z = executorService.submit(() -> nrOfLines(path2));
+            return y.get() + z.get();
+        } finally {
+            if(executorService != null)
+                executorService.shutdown();
+        }
     }
     private static long nrOfLines(String path) {
         try {

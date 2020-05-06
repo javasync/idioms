@@ -42,6 +42,10 @@ public class AsyncIoCallbacksTest {
     }
 
     @Test public void testCallbacks3ForThreeFiles() throws InterruptedException, URISyntaxException {
+        /**
+         * This is a flaw test because the callback is not executed.
+         * The test finishes before the countLines completion.
+         */
         AsyncIoCallbacks3.countLines(
                         (err, count) -> assertEquals(10423, count.intValue()),
                         METAMORPHOSIS,
