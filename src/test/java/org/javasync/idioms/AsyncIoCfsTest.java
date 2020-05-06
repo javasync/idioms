@@ -23,13 +23,15 @@ public class AsyncIoCfsTest {
     @Test public void testCf2ForTwoFiles() throws IOException {
         AsyncIoCf2
             .countLines(METAMORPHOSIS,DISCOURSE_ON_THE_METHOD)
-            .thenAccept(count -> assertEquals(4745, count.intValue()));
+            .thenAccept(count -> assertEquals(4745, count.intValue()))
+            .join();
     }
 
     @Test public void testCf3ForThreeFiles() throws IOException {
         AsyncIoCf3
             .countLines(METAMORPHOSIS, DISCOURSE_ON_THE_METHOD, DIVINE_COMEDY)
-            .thenAccept(count -> assertEquals(10423, count.intValue()));
+            .thenAccept(count -> assertEquals(10423, count.intValue()))
+            .join();
 
     }
 }
