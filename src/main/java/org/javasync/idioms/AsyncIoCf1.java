@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  *
  *  !!!! For now ignoring error handling !!!!
  */
-public class Cf1 {
+public class AsyncIoCf1 {
     public static long countLines(String path1, String path2) throws IOException {
 
         CompletableFuture<Integer> count1 = new CompletableFuture<>();

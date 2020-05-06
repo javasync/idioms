@@ -6,33 +6,29 @@ package org.javasync.idioms;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 
-import static java.lang.ClassLoader.getSystemResource;
 import static org.javasync.idioms.Resources.DISCOURSE_ON_THE_METHOD;
 import static org.javasync.idioms.Resources.DIVINE_COMEDY;
 import static org.javasync.idioms.Resources.METAMORPHOSIS;
 import static org.junit.Assert.assertEquals;
 
-public class CfsTest {
+public class AsyncIoCfsTest {
     @Test public void testCf1ForTwoFiles() throws IOException {
-        long count = Cf1.countLines(
+        long count = AsyncIoCf1.countLines(
                         METAMORPHOSIS,
                         DISCOURSE_ON_THE_METHOD);
         assertEquals(4745, count);
     }
 
     @Test public void testCf2ForTwoFiles() throws IOException {
-        long count = Cf2.countLines(
+        long count = AsyncIoCf2.countLines(
                         METAMORPHOSIS,
                         DISCOURSE_ON_THE_METHOD);
         assertEquals(4745, count);
     }
 
     @Test public void testCf3ForThreeFiles() throws IOException {
-        Cf3
+        AsyncIoCf3
             .countLines(METAMORPHOSIS, DISCOURSE_ON_THE_METHOD, DIVINE_COMEDY)
             .thenAccept(count -> assertEquals(10423, count.intValue()));
 

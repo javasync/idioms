@@ -16,7 +16,7 @@ import static java.lang.ClassLoader.getSystemResource;
  * 15.2.2 Reactive-style API
  */
 
-public class Callbacks3 {
+public class AsyncIoCallbacks3 {
     public static void countLines(BiConsumer<Throwable, Integer> callback, String...paths) throws InterruptedException, URISyntaxException {
         final AtomicInteger total = new AtomicInteger(0);
         final AtomicInteger count = new AtomicInteger(0);

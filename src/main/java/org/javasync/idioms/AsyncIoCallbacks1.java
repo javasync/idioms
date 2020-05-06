@@ -18,7 +18,7 @@ import static java.lang.ClassLoader.getSystemResource;
  * !!!! For now ignoring error handling !!!!
  */
 
-public class Callbacks1 {
+public class AsyncIoCallbacks1 {
     public static int countLines(String path1, String path2) {
         final Result res = new Result();
 

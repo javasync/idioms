@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
  *
  *  !!!! For now ignoring error handling !!!!
  */
-public class Cf2 {
+public class AsyncIoCf2 {
     public static int countLines(String path1, String path2) {
 
         CompletableFuture<Integer> count1 = new CompletableFuture<>();

@@ -17,7 +17,7 @@ import static java.lang.ClassLoader.getSystemResource;
  * !!!! For now ignoring error handling !!!!
  */
 
-public class Callbacks2 {
+public class AsyncIoCallbacks2 {
     public static int countLines(String...paths) throws InterruptedException, URISyntaxException {
         final AtomicInteger total = new AtomicInteger(0);
         final AtomicInteger count = new AtomicInteger(0);

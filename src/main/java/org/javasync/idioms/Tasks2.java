@@ -28,24 +28,24 @@ public class Tasks2 implements AutoCloseable {
 
 
     public long countLines(String...paths) throws ExecutionException, InterruptedException {
-
-        List<Future<Long>> fs = Stream
+        return Stream
             .of(paths)
             .map(path -> executorService.submit(() -> nrOfLines(path)))
-            .collect(toList());
-
-        return fs
+            .collect(toList()) // Force processing pipeline and tasks submission
             .stream()
-            .map(f -> {
-                try {
-                    return f.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    throw new RuntimeException(e);
-                }
-            })
+            .map(Tasks2::join)
             .reduce((y, z) -> y + z)
             .get();
     }
+
+    private static <T> T join(Future<T> f) {
+        try {
+            return f.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void close() throws Exception {
         executorService.shutdown();

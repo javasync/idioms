@@ -12,37 +12,37 @@ import static org.javasync.idioms.Resources.DIVINE_COMEDY;
 import static org.javasync.idioms.Resources.METAMORPHOSIS;
 import static org.junit.Assert.assertEquals;
 
-public class CallbacksTest {
+public class AsyncIoCallbacksTest {
     @Test public void testCallbacks1ForTwoFiles() {
-        int count = Callbacks1.countLines(
+        int count = AsyncIoCallbacks1.countLines(
                         METAMORPHOSIS,
                         DISCOURSE_ON_THE_METHOD);
         assertEquals(4745, count);
     }
 
     @Test public void testCallbacks2ForTwoFiles() throws InterruptedException, URISyntaxException {
-        int count = Callbacks2.countLines(
+        int count = AsyncIoCallbacks2.countLines(
                         METAMORPHOSIS,
                         DISCOURSE_ON_THE_METHOD);
         assertEquals(4745, count);
     }
 
     @Test public void testCallbacks2ForThreeFiles() throws InterruptedException, URISyntaxException {
-        int count = Callbacks2.countLines(
+        int count = AsyncIoCallbacks2.countLines(
                         METAMORPHOSIS,
                         DISCOURSE_ON_THE_METHOD,
                         DIVINE_COMEDY);
         assertEquals(10423, count);
     }
     @Test public void testCallbacks3ForTwoFiles() throws InterruptedException, URISyntaxException {
-        Callbacks3.countLines(
+        AsyncIoCallbacks3.countLines(
                         (err, count) -> assertEquals(4745, count.intValue()),
                         METAMORPHOSIS,
                         DISCOURSE_ON_THE_METHOD);
     }
 
     @Test public void testCallbacks3ForThreeFiles() throws InterruptedException, URISyntaxException {
-        Callbacks3.countLines(
+        AsyncIoCallbacks3.countLines(
                         (err, count) -> assertEquals(10423, count.intValue()),
                         METAMORPHOSIS,
                         DISCOURSE_ON_THE_METHOD,

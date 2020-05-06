@@ -24,20 +24,21 @@ public class Threads2 {
 
     public static long countLines(String...paths) {
         AtomicLong total = new AtomicLong(0);
-        List<Thread> tasks = Stream
+        Stream
             .of(paths)
             .map(path -> new Thread(() -> total.addAndGet(nrOfLines(path))))
             .peek(Thread::start)
-            .collect(toList());
-
-        tasks.forEach(t -> {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+            .collect(toList())
+            .forEach(Threads2::join);
         return total.get();
+    }
+
+    private static void sleep(int milis) {
+        try {
+            Thread.sleep(milis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static long nrOfLines(String path) {
@@ -48,4 +49,12 @@ public class Threads2 {
             throw new UncheckedIOException(e);
         }
     }
+    private static void join(Thread t) {
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

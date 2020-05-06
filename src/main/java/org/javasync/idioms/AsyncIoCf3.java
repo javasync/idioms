@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * Based on chapter
  * 15.4 CompletableFuture and combinators for concurrency
  */
-public class Cf3 {
+public class AsyncIoCf3 {
     public static CompletableFuture<Integer> countLines(String...paths) throws IOException {
 
         return Stream
