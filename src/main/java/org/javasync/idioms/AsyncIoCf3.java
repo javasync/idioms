@@ -16,9 +16,8 @@ public class AsyncIoCf3 {
 
         return Stream
             .of(paths)
-            .map(path -> AsyncFiles
-                .readAll(path)
-                .thenApply(body -> body.split("\n").length))
+            .map(AsyncFiles::readAll)
+            .map(cf -> cf.thenApply(body -> body.split("\n").length))
             .reduce((prev, next) -> prev.thenCombine(next, Integer::sum))
             .get();
     }
