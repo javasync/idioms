@@ -40,7 +40,7 @@ At the end, students should be able to manage and have a clear idea about:
 |----|----|----|----|----|----|
 |`T`|Single|1| |`item`| |
 |`Optional<T>`|Single|1|Internal <br> External|`op.ifPresent(item -> …)` <br> `item = op.get()`|Blocking|
-|`Iterable<T>`|Multiple|*|External|`item = iter.next()`|Blocking|
+|`Iterator<T>`|Multiple|*|External|`item = iter.next()`|Blocking|
 |`Spliterator<T>`|Multiple|*|Internal|`iter.tryAdvance(item -> …)` <br> `iter.forEachRemaining(item -> …)`|Blocking|
 |||||||
 |`CompletableFuture<T>`|Single|1|Internal|`cf.thenAccept(item -> …)`|Non-blocking|
