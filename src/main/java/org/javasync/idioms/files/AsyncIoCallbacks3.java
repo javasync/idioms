@@ -39,9 +39,9 @@ public class AsyncIoCallbacks3 {
             AsyncFiles.readAll(path, (err, body) -> {
                 if(err != null) { callback.accept(err, null); return; }
                 int n = body.split("\n").length;
-                int res = total.addAndGet(n);
+                total.addAndGet(n);
                 if(count.incrementAndGet() >= paths.length)
-                    callback.accept(null, res);
+                    callback.accept(null, total.get());
             });
         }
     }
