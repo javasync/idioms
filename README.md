@@ -32,7 +32,7 @@ To that end, we start from the basis: _Reactive_ + _Streams_.
 For familiarity, we start by:
 1. _Streams_ and first with the `Iterator`, which is a well-known pattern for all 
 students at 4th semester and later we move to `java.util.stream.Stream`.
-2. After that, we tackle _Reactive Streams_ starting with _asynchronous programming_.
+2. After that, we tackle _Reactive Streams_ starting with _asynchronous programming_ (this repo).
 
 <a name="streams-cat">At the end, students are able to manage</a>:
 

@@ -22,11 +22,19 @@ import org.asynchttpclient.Dsl;
 import org.asynchttpclient.Response;
 import org.javaync.io.AsyncFiles;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
+
+import static java.lang.ClassLoader.getSystemResource;
 
 /**
  * Provide consistent asynchronous API according to the underlying API that we are using.
@@ -39,38 +47,49 @@ public class AsyncHttpCf {
     /**
      * folder --->* file ---->* urls
      * Each file has a Url per line.
+     * @return
      */
-    public static CompletableFuture<Integer> countLinesFromUrlsInFiles(String folder) throws IOException {
+    public static CompletableFuture<Long> countLinesFromUrlsInFiles(String folder) throws IOException {
         return Files
-            .walk(Paths.get(folder))  // Stream<String>
+            .walk(pathFrom(folder))  // Stream<String>
+            .filter(file -> new File(file.toString()).isFile())
             .map(AsyncFiles::readAll) // Stream<CF<String>>
-            .map(cf -> cf.thenApply(body -> 0 /* split per lines ---> countLinesFromUrls */))
-            .reduce((p, c) -> p.thenCombine(c, Integer::sum))
+            .map(cf -> cf.thenApply(body -> 0L /* split per lines ---> countLinesFromUrls */))
+            .reduce((p, c) -> p.thenCombine(c, Long::sum))
             .get();
     }
 
-    public static CompletableFuture<Integer> countLinesFromUrls(String...urls) {
+    public static CompletableFuture<Long> countLinesFromUrls(String...urls) {
         return Stream
             .of(urls)
             .map(AsyncHttpCf::fetchAndCountLines)
-            .reduce((prev, next) -> prev.thenCombine(next, Integer::sum))
+            .reduce((prev, next) -> prev.thenCombine(next, Long::sum))
             .get();
     }
-    public static CompletableFuture<Integer> fetchAndCountLines(String url) {
+    public static CompletableFuture<Long> fetchAndCountLines(String url) {
         AsyncHttpClient ahc = Dsl.asyncHttpClient();
         return ahc
             .prepareGet(url)
             .execute()
             .toCompletableFuture()
-            .thenApply(Response::getResponseBody)
-            .whenComplete((body, excep) -> close(ahc) )   // CF<String> same as previous
-            .thenApply(body -> body.split("\n").length ); // CF<Integer>
+            .thenApply(Response::getResponseBodyAsStream)
+            .thenApply(in -> new BufferedReader(new InputStreamReader(in)))
+            .thenApply(reader -> reader.lines().count())
+            .whenComplete((body, excep) -> close(ahc));
     }
 
     private static void close(AsyncHttpClient ahc) {
         try {
             ahc.close();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private static Path pathFrom(String file) {
+        try {
+            URL url = getSystemResource(file);
+            return Paths.get(url.toURI());
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
