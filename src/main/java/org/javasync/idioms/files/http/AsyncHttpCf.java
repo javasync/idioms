@@ -51,10 +51,11 @@ public class AsyncHttpCf {
      */
     public static CompletableFuture<Long> countLinesFromUrlsInFiles(String folder) throws IOException {
         return Files
-            .walk(pathFrom(folder))  // Stream<String>
-            .filter(file -> new File(file.toString()).isFile())
-            .map(AsyncFiles::readAll) // Stream<CF<String>>
-            .map(cf -> cf.thenApply(body -> 0L /* split per lines ---> countLinesFromUrls */))
+            .walk(pathFrom(folder))                                    // Stream<String>
+            .filter(file -> new File(file.toString()).isFile())        // ""
+            .map(AsyncFiles::readAll)                                  // Stream<CF<String>>
+            .map(cf -> cf.thenApply(body -> body.split("\n")))         // Stream<CF<String[]>>
+            .map(cf -> cf.thenCompose(AsyncHttpCf::countLinesFromUrls))// Stream<CF<Long>>
             .reduce((p, c) -> p.thenCombine(c, Long::sum))
             .get();
     }
