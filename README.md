@@ -7,17 +7,17 @@ You may find
 <a href="https://github.com/javasync/idioms/tree/master/src/main/java/org/javasync/idioms" target="_blank">here</a>
 5 different approaches of using asynchronicity to count the total number
 of lines of given files (e.g. `countLines(String...paths)`), namely:
-1. [Threads and blocking IO](https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/Threads2.java) (**avoid it**)
-2. [Tasks and blocking IO](https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/Tasks2.java) (**avoid it**)
+1. [Threads and blocking IO](https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/files/Threads2.java) (**avoid it**)
+2. [Tasks and blocking IO](https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/files/Tasks2.java) (**avoid it**)
 3. Asynchronous IO
     <ol type="a">
-        <li><a href="https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/AsyncIoCallbacks3.java">
+        <li><a href="https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/files/AsyncIoCallbacks3.java">
             Callbacks
         </a></li>
-        <li><code><a href="https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/AsyncIoCf3.java">
+        <li><code><a href="https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/files/AsyncIoCf3.java">
             CompletableFuture
         </a></code></li>
-        <li><em><a href="https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/AsyncIoRx.java">
+        <li><em><a href="https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/files/AsyncIoRx.java">
             Reactive Streams
         </a></em></li>
     </ol>
