@@ -26,15 +26,15 @@ of lines of given files (e.g. `countLines(String...paths)`), namely:
 
 Teaching
 <a href="https://www.isel.pt/en/subjects/modeling-and-design-patterns-leic" target="_blank">
-Modelling and Design Patterns</a> course at ISEL we would like to achieve
+Modelling and Design Patterns</a> course at ISEL we should achieve
 <a href="_black" target="_blank">Reactive Streams</a> by the end of the semester.
 To that end, we start from the basis: _Reactive_ + _Streams_.
 For familiarity, we start by:
-1. _Streams_ and first with the `Iterable`, which is a well-known pattern for all 
+1. _Streams_ and first with the `Iterator`, which is a well-known pattern for all 
 students at 4th semester and later we move to `java.util.stream.Stream`.
-2. After that, we tackle _Reactive_ starting with _asynchronous programming_.
+2. After that, we tackle _Reactive Streams_ starting with _asynchronous programming_.
 
-At the end, students should be able to manage and have a clear idea about:
+<a name="streams-cat">At the end, students are able to manage</a>:
 
 ||Multiplicity||Access||Call|
 |----|----|----|----|----|----|
@@ -56,7 +56,7 @@ For instance, I would not consider  `AsynchronousFileChannel` a valid option.
 Our students are used to Kotlin and Javascript where 
 -->
 
-## Thinking reactive
+## `CompletableFuture` in a nutshell 
 
 |`Stream<T>`|`CompletableFuture<T>`|
 |----|----|
