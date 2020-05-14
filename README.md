@@ -40,7 +40,7 @@ students at 4th semester and later we move to `java.util.stream.Stream`.
 <a name="streams-cat">At the end, students are able to manage</a>:
 
 ||Multiplicity|Access||Call|
-|----|----|----|----|----|----|
+|----|----|----|----|----|
 |`T`|1| |`item`| |
 |`Optional<T>`|1|Internal <br> External|`op.ifPresent(item -> …)` <br> `item = op.get()`|Blocking|
 |`Iterator<T>`|*|External|`item = iter.next()`|Blocking|
