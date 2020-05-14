@@ -26,6 +26,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -35,6 +36,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 import static java.lang.ClassLoader.getSystemResource;
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
 /**
  * Provide consistent asynchronous API according to the underlying API that we are using.
@@ -44,28 +46,33 @@ import static java.lang.ClassLoader.getSystemResource;
  * Part of Approach 3.ii of https://github.com/javasync/idioms
  */
 public class AsyncHttpCf {
+
+    static final CompletableFuture<Long> ZERO = completedFuture(0L);
+
+    private AsyncHttpCf() {
+    }
+
     /**
      * folder --->* file ---->* urls
      * Each file has a Url per line.
-     * @return
+     * @return Sum of the number of lines of the HTTP body responses.
      */
-    public static CompletableFuture<Long> countLinesFromUrlsInFiles(String folder) throws IOException {
-        return Files
-            .walk(pathFrom(folder))                                    // Stream<String>
-            .filter(file -> new File(file.toString()).isFile())        // ""
-            .map(AsyncFiles::readAll)                                  // Stream<CF<String>>
-            .map(cf -> cf.thenApply(body -> body.split("\n")))         // Stream<CF<String[]>>
-            .map(cf -> cf.thenCompose(AsyncHttpCf::countLinesFromUrls))// Stream<CF<Long>>
-            .reduce((p, c) -> p.thenCombine(c, Long::sum))
-            .get();
+    public static CompletableFuture<Long> countLinesFromUrlsInFiles(String folder) throws IOException, URISyntaxException {
+        try(Stream<Path> files = Files.walk(pathFrom(folder))){
+            return files
+                .filter(file -> new File(file.toString()).isFile())        // Stream<String>
+                .map(AsyncFiles::readAll)                                  // Stream<CF<String>>
+                .map(cf -> cf.thenApply(body -> body.split("\n")))         // Stream<CF<String[]>>
+                .map(cf -> cf.thenCompose(AsyncHttpCf::countLinesFromUrls))// Stream<CF<Long>>
+                .reduce(ZERO, (p, c) -> p.thenCombine(c, Long::sum));
+        }
     }
 
     public static CompletableFuture<Long> countLinesFromUrls(String...urls) {
         return Stream
             .of(urls)
             .map(AsyncHttpCf::fetchAndCountLines)
-            .reduce((prev, next) -> prev.thenCombine(next, Long::sum))
-            .get();
+            .reduce(ZERO, (prev, next) -> prev.thenCombine(next, Long::sum));
     }
     public static CompletableFuture<Long> fetchAndCountLines(String url) {
         AsyncHttpClient ahc = Dsl.asyncHttpClient();
@@ -83,15 +90,11 @@ public class AsyncHttpCf {
         try {
             ahc.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
-    private static Path pathFrom(String file) {
-        try {
-            URL url = getSystemResource(file);
-            return Paths.get(url.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+    private static Path pathFrom(String file) throws URISyntaxException {
+        URL url = getSystemResource(file);
+        return Paths.get(url.toURI());
     }
 }

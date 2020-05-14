@@ -47,7 +47,7 @@ public class AsyncIoCallbacksTest {
     }
     @Test public void testCallbacks3ForTwoFiles() throws InterruptedException, URISyntaxException {
         AsyncIoCallbacks3.countLines(
-                        (err, count) -> assertEquals(4745, count.intValue()),
+                        (err, count) -> assertEquals(4745, count),
                         Resources.METAMORPHOSIS,
                         Resources.DISCOURSE_ON_THE_METHOD);
     }
@@ -58,7 +58,7 @@ public class AsyncIoCallbacksTest {
          * The test finishes before the countLines completion.
          */
         AsyncIoCallbacks3.countLines(
-                        (err, count) -> assertEquals(10423, count.intValue()),
+                        (err, count) -> assertEquals(10423, count),
                         Resources.METAMORPHOSIS,
                         Resources.DISCOURSE_ON_THE_METHOD,
                         Resources.DIVINE_COMEDY);

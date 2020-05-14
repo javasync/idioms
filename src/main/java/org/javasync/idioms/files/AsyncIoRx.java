@@ -20,7 +20,6 @@ package org.javasync.idioms.files;
 import io.reactivex.rxjava3.core.Observable;
 import org.javaync.io.AsyncFiles;
 
-import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 import static io.reactivex.rxjava3.core.Observable.fromPublisher;
@@ -33,8 +32,12 @@ import static io.reactivex.rxjava3.core.Observable.fromPublisher;
  * Part of Approach 3.iii of https://github.com/javasync/idioms
  */
 public class AsyncIoRx {
-    public static CompletionStage<Integer> countLines(String...paths) throws IOException {
-        return Observable             // RxJava implementation for Publisher without back-pressure
+
+    private AsyncIoRx() {
+    }
+
+    public static CompletionStage<Integer> countLines(String...paths) {
+        return Observable     // RxJava implementation for Publisher without back-pressure
             .fromArray(paths)
             .flatMap(path -> fromPublisher(AsyncFiles.lines(path)))
             .map(body -> body.split("\n").length)

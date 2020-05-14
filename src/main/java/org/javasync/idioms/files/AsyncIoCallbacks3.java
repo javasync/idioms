@@ -19,9 +19,8 @@ package org.javasync.idioms.files;
 
 import org.javaync.io.AsyncFiles;
 
-import java.net.URISyntaxException;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.BiConsumer;
+import java.util.function.ObjIntConsumer;
 
 /**
  * Non-blocking IO with org.javasync.io.AsyncFiles API (org.javasync.RxIo library).
@@ -31,13 +30,17 @@ import java.util.function.BiConsumer;
  * Part of Approach 3.i of https://github.com/javasync/idioms
  */
 public class AsyncIoCallbacks3 {
-    public static void countLines(BiConsumer<Throwable, Integer> callback, String...paths) throws InterruptedException, URISyntaxException {
+
+    private AsyncIoCallbacks3() {
+    }
+
+    public static void countLines(ObjIntConsumer<Throwable> callback, String...paths) {
         final AtomicInteger total = new AtomicInteger(0);
         final AtomicInteger count = new AtomicInteger(0);
 
         for(String path : paths) {
             AsyncFiles.readAll(path, (err, body) -> {
-                if(err != null) { callback.accept(err, null); return; }
+                if(err != null) { callback.accept(err, 0); return; }
                 int n = body.split("\n").length;
                 total.addAndGet(n);
                 if(count.incrementAndGet() >= paths.length)

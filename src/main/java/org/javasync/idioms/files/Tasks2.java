@@ -20,14 +20,13 @@ package org.javasync.idioms.files;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
+import static java.nio.file.Paths.get;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -38,29 +37,36 @@ import static java.util.stream.Collectors.toList;
  * Part of Approach 2 (avoid it) of https://github.com/javasync/idioms
  */
 public class Tasks2 implements AutoCloseable {
+
     private final ExecutorService executorService;
 
     public Tasks2(int nrOfThreads) {
         executorService = Executors.newFixedThreadPool(nrOfThreads);
     }
 
-    public long countLines(String...paths) throws ExecutionException, InterruptedException {
+    public long countLines(String...paths) {
         return Stream
             .of(paths)
             .map(path -> executorService.submit(() -> nrOfLines(path)))
             .collect(toList()) // Force processing pipeline and tasks submission
             .stream()
             .map(Tasks2::join)
-            .reduce((y, z) -> y + z)
-            .get();
+            .reduce(0L, (y, z) -> y + z);
     }
 
     private static <T> T join(Future<T> f) {
         try {
             return f.get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            // Restore interrupted state...
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            throw new IllegalStateException(e);
         }
+        /**
+         * Unreachable statement!
+         */
+        return null;
     }
 
     @Override
@@ -69,9 +75,8 @@ public class Tasks2 implements AutoCloseable {
     }
 
     private static long nrOfLines(String path) {
-        try {
-            Path p = Paths.get(path);
-            return Files.lines(p).count();
+        try(Stream<String> lines = Files.lines(get(path))) {
+            return lines.count();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

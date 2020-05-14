@@ -41,12 +41,16 @@ import static java.lang.ClassLoader.getSystemResource;
  * Part of Approach 3.ii of https://github.com/javasync/idioms
  */
 public class AsyncHttpRx {
+
+    private AsyncHttpRx() {
+    }
+
     /**
      * folder --->* file ---->* urls
      * Each file has a Url per line.
      * @return
      */
-    public static @NonNull CompletionStage<Long> countLinesFromUrlsInFiles(String folder) throws IOException {
+    public static @NonNull CompletionStage<Long> countLinesFromUrlsInFiles(String folder) throws IOException, URISyntaxException {
         Stream<Publisher<String>> lines = Files
             .walk(pathFrom(folder))                              // Stream<String>
             .filter(file -> new File(file.toString()).isFile())  // ""
@@ -65,12 +69,8 @@ public class AsyncHttpRx {
             .toCompletionStage();  // CF = CompletionStage + join()
     }
 
-    private static Path pathFrom(String file) {
-        try {
-            URL url = getSystemResource(file);
-            return Paths.get(url.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+    private static Path pathFrom(String file) throws URISyntaxException {
+        URL url = getSystemResource(file);
+        return Paths.get(url.toURI());
     }
 }

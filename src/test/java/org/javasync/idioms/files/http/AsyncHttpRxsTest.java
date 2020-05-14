@@ -24,12 +24,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class AsyncHttpRxsTest {
 
@@ -39,7 +39,7 @@ public class AsyncHttpRxsTest {
         "https://www.manning.com/books/functional-and-reactive-domain-modeling",
         "https://www.reactive-streams.org/"};
 
-    @Test public void testRxWithUrlsInFiles() throws IOException {
+    @Test public void testRxWithUrlsInFiles() throws IOException, URISyntaxException {
         long expectedLines = Stream
             .of(URLs)
             .mapToLong(url -> httpGetSync(url).count())

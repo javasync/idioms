@@ -36,17 +36,19 @@ students at 4th semester and later we move to `java.util.stream.Stream`.
 
 <a name="streams-cat">At the end, students are able to manage</a>:
 
-||Multiplicity||Access||Call|
+||Multiplicity|Access||Call|
 |----|----|----|----|----|----|
-|`T`|Single|1| |`item`| |
-|`Optional<T>`|Single|1|Internal <br> External|`op.ifPresent(item -> …)` <br> `item = op.get()`|Blocking|
-|`Iterator<T>`|Multiple|*|External|`item = iter.next()`|Blocking|
-|`Spliterator<T>`|Multiple|*|Internal|`iter.tryAdvance(item -> …)` <br> `iter.forEachRemaining(item -> …)`|Blocking|
+|`T`|1| |`item`| |
+|`Optional<T>`|1|Internal <br> External|`op.ifPresent(item -> …)` <br> `item = op.get()`|Blocking|
+|`Iterator<T>`|*|External|`item = iter.next()`|Blocking|
+|`Spliterator<T>`|*|Internal|`iter.tryAdvance(item -> …)` <br> `iter.forEachRemaining(item -> …)`|Blocking|
 |||||||
-|`CompletableFuture<T>`|Single|1|Internal|`cf.thenAccept(item -> …)`|Non-blocking|
-|`Publisher<T>` <br><small>(e.g. RxJava, Reactor, Kotlin Flow)</small>|Multiple|*|Internal|`pub.subscribe(item -> …)`|Non-blocking|
-|Async Iterator <br><small>(e.g C# and .Net)<small>|Multiple|*|External|`item = await iter.next()` <br> `for await(const item of iter) …`|Non-blocking|
+|`CompletableFuture<T>`|1|Internal|`cf.thenAccept(item -> …)`|Non-blocking|
+|`Publisher<T>` <br><small>(e.g. RxJava, Reactor, Kotlin Flow)</small>|*|Internal|`pub.subscribe(item -> …)`|Non-blocking|
+|Async Iterator <br><small>(e.g C# and .Net)<small>|*|External|`item = await iter.next()` <br> `for await(const item of iter) …`|Non-blocking|
 
+(*) Notice that `Spliterator` is not only related with the `Stream` parallelism. For a quick explanation about its advantages in sequential processing you may read the answer of Brian Goetz here: Iterator versus Stream of Java 8
+https://stackoverflow.com/a/31212695/1140754
 
 <!--
 Regarding the 2nd point, we need a simple context to exercise asynchronous IO in 

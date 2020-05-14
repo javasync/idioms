@@ -19,7 +19,6 @@ package org.javasync.idioms.files;
 
 import org.javaync.io.AsyncFiles;
 
-import java.net.URISyntaxException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -32,7 +31,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Part of Approach 3.i of https://github.com/javasync/idioms
  */
 public class AsyncIoCallbacks2 {
-    public static int countLines(String...paths) throws InterruptedException, URISyntaxException {
+
+    private AsyncIoCallbacks2() {
+    }
+
+    public static int countLines(String...paths) {
         final AtomicInteger total = new AtomicInteger(0);
         final AtomicInteger count = new AtomicInteger(0);
 

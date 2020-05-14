@@ -20,12 +20,13 @@ package org.javasync.idioms.files;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Stream;
+
+import static java.nio.file.Paths.get;
 
 /**
  * Based on example of section 15.2.1 Synchronous and asynchronous APIs
@@ -35,6 +36,10 @@ import java.util.concurrent.Future;
  * Part of Approach 2 (avoid it) of https://github.com/javasync/idioms
  */
 public class Tasks1 {
+
+    private Tasks1() {
+    }
+
     public static long countLines(String path1, String path2) throws ExecutionException, InterruptedException {
         ExecutorService executorService = null;
         try{
@@ -47,10 +52,10 @@ public class Tasks1 {
                 executorService.shutdown();
         }
     }
+
     private static long nrOfLines(String path) {
-        try {
-            Path p = Paths.get(path);
-            return Files.lines(p).count();
+        try(Stream<String> lines = Files.lines(get(path))) {
+            return lines.count();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

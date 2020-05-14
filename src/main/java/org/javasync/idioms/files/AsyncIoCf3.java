@@ -19,10 +19,10 @@ package org.javasync.idioms.files;
 
 import org.javaync.io.AsyncFiles;
 
-import java.io.IOException;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
+
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
 /**
  * Provide consistent asynchronous API according to the underlying API that we are using.
@@ -32,13 +32,16 @@ import java.util.stream.Stream;
  * Part of Approach 3.ii of https://github.com/javasync/idioms
  */
 public class AsyncIoCf3 {
-    public static CompletableFuture<Integer> countLines(String...paths) throws IOException {
 
+    private AsyncIoCf3() {
+    }
+
+    public static CompletableFuture<Integer> countLines(String...paths) {
+        CompletableFuture<Integer> zero = completedFuture(0);
         return Stream
             .of(paths)
             .map(AsyncFiles::readAll)
             .map(cf -> cf.thenApply(body -> body.split("\n").length))
-            .reduce((prev, next) -> prev.thenCombine(next, Integer::sum))
-            .get();
+            .reduce(zero, (prev, next) -> prev.thenCombine(next, Integer::sum));
     }
 }

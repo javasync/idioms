@@ -29,6 +29,10 @@ import java.util.concurrent.CompletableFuture;
  * Part of Approach 3.ii of https://github.com/javasync/idioms
  */
 public class AsyncIoCf2 {
+
+    private AsyncIoCf2() {
+    }
+
     public static CompletableFuture<Integer> countLines(String path1, String path2) {
         CompletableFuture<Integer> cf1 = AsyncFiles
             .readAll(path1)

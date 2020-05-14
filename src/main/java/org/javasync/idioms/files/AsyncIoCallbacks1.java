@@ -19,15 +19,6 @@ package org.javasync.idioms.files;
 
 import org.javaync.io.AsyncFiles;
 
-import java.io.UncheckedIOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static java.lang.ClassLoader.getSystemResource;
-
 /**
  * Based on example of section 15.2.2 Reactive-style API
  * of Modern Java in Action.
@@ -38,16 +29,16 @@ import static java.lang.ClassLoader.getSystemResource;
  * Part of Approach 3.i of https://github.com/javasync/idioms
  */
 public class AsyncIoCallbacks1 {
+
+    private AsyncIoCallbacks1() {
+    }
+
     public static int countLines(String path1, String path2) {
         final Result res = new Result();
 
-        AsyncFiles.readAll(path1, (err, body) -> {
-            res.left = body.split("\n").length;
-        });
+        AsyncFiles.readAll(path1, (err, body) -> res.left = body.split("\n").length);
 
-        AsyncFiles.readAll(path2, (err, body) -> {
-            res.right = body.split("\n").length;
-        });
+        AsyncFiles.readAll(path2, (err, body) -> res.right = body.split("\n").length);
 
         while(res.left < 0 || res.right< 0) {
             Thread.yield();
