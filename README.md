@@ -45,7 +45,7 @@ students at 4th semester and later we move to `java.util.stream.Stream`.
 |`Optional<T>`|1|Internal <br> External|`op.ifPresent(item -> …)` <br> `item = op.get()`|Blocking|
 |`Iterator<T>`|*|External|`item = iter.next()`|Blocking|
 |`Spliterator<T>`|*|Internal|`iter.tryAdvance(item -> …)` <br> `iter.forEachRemaining(item -> …)`|Blocking|
-|||||||
+||||||
 |`CompletableFuture<T>`|1|Internal|`cf.thenAccept(item -> …)`|Non-blocking|
 |`Publisher<T>` <br><small>(e.g. RxJava, Reactor, Kotlin Flow)</small>|*|Internal|`pub.subscribe(item -> …)`|Non-blocking|
 |Async Iterator <br><small>(e.g C# and .Net)<small>|*|External|`item = await iter.next()` <br> `for await(const item of iter) …`|Non-blocking|
