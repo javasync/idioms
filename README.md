@@ -1,5 +1,8 @@
 # idioms
 
+[![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=com.github.javasync%3Aidioms&metric=coverage)](https://sonarcloud.io/component_measures?id=com.github.javasync%3Aidioms&metric=Coverage)
+
+
 Different ways of dealing with _asynchronicity_, which is informally,
 to allow multiple things to happen "_at the same time_", i.e. _concurrently_.
 
