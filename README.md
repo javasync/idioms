@@ -50,8 +50,7 @@ students at 4th semester and later we move to `java.util.stream.Stream`.
 |`Publisher<T>` <br><small>(e.g. RxJava, Reactor, Kotlin Flow)</small>|*|Internal|`pub.subscribe(item -> …)`|Non-blocking|
 |Async Iterator <br><small>(e.g C# and .Net)<small>|*|External|`item = await iter.next()` <br> `for await(const item of iter) …`|Non-blocking|
 
-(*) Notice that `Spliterator` is not only related with the `Stream` parallelism. For a quick explanation about its advantages in sequential processing you may read the answer of Brian Goetz here: Iterator versus Stream of Java 8
-https://stackoverflow.com/a/31212695/1140754
+(*) Notice that `Spliterator` is not only related with the `Stream` parallelism. For a quick explanation about its advantages in sequential processing you may read the answer of Brian Goetz here: [Iterator versus Stream of Java 8](https://stackoverflow.com/a/31212695/1140754)
 
 <!--
 Regarding the 2nd point, we need a simple context to exercise asynchronous IO in 
