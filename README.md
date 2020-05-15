@@ -3,7 +3,6 @@
 [![Build Status](https://sonarcloud.io/api/project_badges/measure?project=com.github.javasync%3Aidioms&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.javasync%3Aidioms)
 [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=com.github.javasync%3Aidioms&metric=coverage)](https://sonarcloud.io/component_measures?id=com.github.javasync%3Aidioms&metric=Coverage)
 
-
 Different ways of dealing with _asynchronicity_, which is informally,
 to allow multiple things to happen "_at the same time_", i.e. _concurrently_.
 
@@ -73,3 +72,8 @@ Our students are used to Kotlin and Javascript where
 
 (*) does not exist in JDK.
 
+## Presentation
+
+<a target="_blank" href="https://github.com/javasync/idioms/blob/master/assets/isel-mpd-2020-week9-Async-Programming.pdf">
+    <img width="720" src="assets/isel-mpd-2020-week9-Async-Programming.gif">
+</a>
