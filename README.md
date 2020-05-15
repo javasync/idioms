@@ -7,7 +7,7 @@ Different ways of dealing with _asynchronicity_, which is informally,
 to allow multiple things to happen "_at the same time_", i.e. _concurrently_.
 
 You may find
-<a href="https://github.com/javasync/idioms/tree/master/src/main/java/org/javasync/idioms" target="_blank">here</a>
+<a href="https://github.com/javasync/idioms/tree/master/src/main/java/org/javasync/idioms/files" target="_blank">here</a>
 5 different approaches of using asynchronicity to count the total number
 of lines of given files (e.g. `countLines(String...paths)`), namely:
 1. [Threads and blocking IO](https://github.com/javasync/idioms/blob/master/src/main/java/org/javasync/idioms/files/Threads2.java) (**avoid it**)
