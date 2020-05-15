@@ -30,7 +30,7 @@ of lines of given files (e.g. `countLines(String...paths)`), namely:
 Teaching
 <a href="https://www.isel.pt/en/subjects/modeling-and-design-patterns-leic" target="_blank">
 Modelling and Design Patterns</a> course at ISEL we should achieve
-<a href="_black" target="_blank">Reactive Streams</a> by the end of the semester.
+<a href="https://www.reactive-streams.org" target="_blank">Reactive Streams</a> by the end of the semester.
 To that end, we start from the basis: _Reactive_ + _Streams_.
 For familiarity, we start by:
 1. _Streams_ and first with the `Iterator`, which is a well-known pattern for all 
