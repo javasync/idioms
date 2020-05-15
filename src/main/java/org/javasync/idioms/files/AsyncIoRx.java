@@ -43,6 +43,5 @@ public class AsyncIoRx {
             .map(body -> body.split("\n").length)
             .reduce(0, Integer::sum)
             .toCompletionStage();
-
     }
 }

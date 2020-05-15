@@ -65,5 +65,4 @@ public class Threads2 {
             Thread.currentThread().interrupt();
         }
     }
-
 }
